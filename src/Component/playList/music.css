@@ -1,6 +1,4 @@
-.musicSpace {
-  font-family: cursive;
-}
+
 .musicSpace * {
   margin: 0;
   padding: 0;
@@ -32,12 +30,14 @@
   text-transform: capitalize;
 }
 .musicSpace .music-name {
-  font-size: 40px;
+  font-size: 25px;
   font-weight: 500;
   margin-bottom: 10px;
+  color: #273258;
 }
 .musicSpace .artist-name {
-  font-size: 20px;
+  font-size: 17px;
+  color: #C3C4CF;
 }
 .musicSpace .disk {
   position: relative;
@@ -69,16 +69,20 @@
 .musicSpace .current-time,
 .musicSpace .song-duration {
   font-size: 14px;
-
   color: black;
+  margin-top: 25px;
 
+}
+.musicSpace .current-time{
+  position: absolute;
+  left: 0;
 }
 .musicSpace .song-duration {
   position: absolute;
   right: 0;
 }
 .musicSpace .controls {
-  width: 60%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -90,7 +94,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #d5eebb;
+  background: #D4D8E5;
   cursor: pointer;
   border: none;
 }
@@ -137,7 +141,7 @@
 .musicSpace .btn {
   width: 40px;
   height: 40px;
-  background: #d5eebb;
+  background: #fff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -172,7 +176,7 @@
   width: 100%; /* Full-width */
   height: 5px; /* Specified height */
   border-radius: 10px;
-  background: #7fc8a9;
+  background: #D4D9E5;
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -190,15 +194,17 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
-  width: 10px; /* Set a specific slider handle width */
-  height: 10px; /* Slider handle height */
+  width: 15px; /* Set a specific slider handle width */
+  height: 15px; /* Slider handle height */
   border-radius: 50%;
-  background: #04AA6D; /* Green background */
+  background: #264CDA; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
 
 .slider::-webkit-slider-thumb:hover {
   scale: 1.5;
+  border: 1px solid #fff;
+  -webkit-transition: .2s;
 }
 
 .slider::-moz-range-thumb {
@@ -207,6 +213,8 @@
   background: #04AA6D; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+
+
 
 .d-none {
   display: none;
