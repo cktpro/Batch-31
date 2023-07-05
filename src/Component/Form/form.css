@@ -9,16 +9,16 @@
     border-radius: 20px;
 }
 .box .child{
-    opacity: 0.9;
+    opacity: 0.8;
     width: 370px;
-    height: 530px;
+    height: 555px;
     background-color: black;
     position: relative;
     left:15px;
-    top: 155px;
+    top: 130px;
     border-radius: 10px;
     padding: 20px 20px 0 20px;
-    color: white;
+    
 }
 .btn-green{
     background-color: rgb(1,195,142);
@@ -26,6 +26,7 @@
 }
 .btn-white{
     background-color: rgb(222,248,238);
+    color: black;
 }
 .btn-white,.btn-green{
     font-weight: 500;
@@ -47,6 +48,7 @@
 }
 .term{
     font-size: 15px;
+    color: white;
 }
 .link{
     text-decoration: none;
