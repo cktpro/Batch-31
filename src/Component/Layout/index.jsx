@@ -1,15 +1,18 @@
 import React from 'react';
 import Footer from '../Footer';
 import Header from '../Header';
+import { Outlet } from 'react-router-dom';
 function Layout(props) {
-    const {title,children}=props
     return (
         <>
             <Header/>
-            <h1>{title}</h1>
-            {children}
+           <div>
+            <Outlet/>
+           </div>
+
             <Footer/>
         </>
+        
     );
 }
 
