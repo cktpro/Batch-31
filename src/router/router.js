@@ -14,6 +14,7 @@ import Main from 'pages/Main'
 import NotFoundPage from 'pages/404';
 import TodoApp from 'pages/todoApp';
 import MyProfile from 'pages/profile';
+import Antd from 'pages/antd';
 // import CounterApp from 'pages/counterApp';
 
 const LOCATIONS = {
@@ -26,7 +27,8 @@ const LOCATIONS = {
   TEMPLATE: 'template',
   COUNTER: 'counter',
   TODO:'todo',
-  PROFILE:'profile'
+  PROFILE:'profile',
+  ANTD:'antd'
 }
 
 const routers = [
@@ -46,6 +48,7 @@ const routers = [
   },
   { path: LOCATIONS.FORM, element: <Form /> },
   { path: LOCATIONS.TODO, element: <TodoApp /> },
+  { path: LOCATIONS.ANTD, element: <Antd /> },
 //   { path: LOCATIONS.COUNTER, element: <CounterApp /> },
   { path: "*", element: <NotFoundPage /> },
 ];

@@ -1,29 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap");
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Nunito", sans-serif;
-}
 
-:root {
-  --green: #58a497;
-  --yellow: #e09449;
-  --lightgreen1: #a4bdb7;
-  --brown: #8b4448;
-  --gray: gray;
-  --lightgreen2: rgb(164, 189, 183, 0.5);
-  --box: #ededed;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-
-  background: #a4bdb7;
-}
 
 /* Content-1:Start */
 .box {
