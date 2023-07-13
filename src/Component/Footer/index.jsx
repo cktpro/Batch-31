@@ -1,5 +1,15 @@
 import React from 'react';
-
-export default function Footer(){
-   return <footer className='footer'>This is footer</footer>
+import {  Layout } from 'antd';
+const { Footer } = Layout;
+const Footers = () => {
+  return (
+   <Footer
+   style={{
+     textAlign: 'center',
+   }}
+ >
+   Ant Design ©2023 Created by Ant UED
+ </Footer>
+  );
 };
+export default Footers;

@@ -7,7 +7,7 @@ function BreadCrumb(props) {
           margin: '16px 0',
         }}
       >
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>Antd</Breadcrumb.Item>
         <Breadcrumb.Item>List</Breadcrumb.Item>
         <Breadcrumb.Item>App</Breadcrumb.Item>
       </Breadcrumb>

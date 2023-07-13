@@ -6,7 +6,6 @@ import { actionGetProfileSuccess, actionGetProfileFail } from "./action";
 
 function* getMyProfile() {
   try {
-    console.log("xxxccccc")
     const response = yield profile.getMyProfile();
     yield put(actionGetProfileSuccess(response));
   } catch (error) {

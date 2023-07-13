@@ -1,56 +1,54 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-// import { LOCATIONS } from 'constants/index';
+import { LOCATIONS } from 'constants/index';
+
 // import ParentComponent from 'components/example/useCallback';
 import Layout from 'Component/Layout';
-import Form from 'pages/Form';
+import AntdLayout from 'Component/antdLayout';
+
+import FormPage from 'pages/Form';
 import PlayList from 'pages/playList';
-import CounterApp from 'pages/counterApp';
-import Main from 'pages/Main'
-// import ProductsPage from 'pages/products';
-// import SliderPage from 'pages/slider';
-// import TabPage from 'pages/tabs';
-// import Template from 'pages/template';
 import NotFoundPage from 'pages/404';
+import CounterApp from 'pages/counterApp';
 import TodoApp from 'pages/todoApp';
-import MyProfile from 'pages/profile';
-import Antd from 'pages/antd';
-// import CounterApp from 'pages/counterApp';
+import Profile from 'pages/profile';
+import AntdHomePage from 'pages/antd/homePage';
+import ProductsPage from 'pages/productsPage';
+import ProductsDetail from 'pages/productsPage/detail';
+import LoginPage from 'pages/loginPage';
 
-const LOCATIONS = {
-  HOME_PAGE: '/',
-  PLAY_LIST: 'play-list',
-  FORM: 'form',
-  TAB: 'tabs',
-  SLIDE: 'slider',
-  PRODUCTS: 'products',
-  TEMPLATE: 'template',
-  COUNTER: 'counter',
-  TODO:'todo',
-  PROFILE:'profile',
-  ANTD:'antd'
-}
-
-const routers = [
+export const routers = [
   {
     path: LOCATIONS.HOME_PAGE,
+    name: "Layout",
     element: <Layout />,
     children: [
-      { isRoot: true, element: <Main /> },
-      { path: LOCATIONS.PLAY_LIST, element: <PlayList /> },
-    //   { path: LOCATIONS.FORM, element: <Form /> },
-      { path: LOCATIONS.COUNTER, element: <CounterApp /> },
-      { path: LOCATIONS.PROFILE, element: <MyProfile /> }
-    //   { path: LOCATIONS.SLIDE, element: <SliderPage /> },
-    //   { path: LOCATIONS.PRODUCTS, element: <ProductsPage /> 
-    // },
+      { isRoot: true, name: "Parent Component", element: <TodoApp /> },
+      { path: LOCATIONS.PLAY_LIST, name: "Play List", element: <PlayList /> },
+      
+      // { path: LOCATIONS.TAB, name: "Tab", element: <TabPage /> },
+      // { path: LOCATIONS.SLIDE, name: "Slider", element: <SliderPage /> },
+      { path: LOCATIONS.PRODUCTS, name: "Product Page", element: <ProductsPage /> },
+      { path: LOCATIONS.MY_PROFILE, name: "My Profile", element: <Profile /> },
+      { path: LOCATIONS.COUNTER, name: "Counter", element: <CounterApp /> },
+      { path: LOCATIONS.TODO, name: "Todo", element: <TodoApp /> },
+      { path: LOCATIONS.PRODUCTS_PAGE, name: "Products", element: <ProductsPage /> },
+      { path: LOCATIONS.PRODUCTS_DETAIL_PAGE, name: "Products Detail", element: <ProductsDetail /> },
     ]
   },
-  { path: LOCATIONS.FORM, element: <Form /> },
-  { path: LOCATIONS.TODO, element: <TodoApp /> },
-  { path: LOCATIONS.ANTD, element: <Antd /> },
-//   { path: LOCATIONS.COUNTER, element: <CounterApp /> },
+  {
+    path: LOCATIONS.ANT_DESIGN,
+    name: "Antd",
+    element: <AntdLayout />,
+    children: [
+      { path: LOCATIONS.ANT_DESIGN_HOME_PAGE, name: "Home", element: <AntdHomePage /> },
+      // { isRoot: true, name: "Home", element: <AntdHomePage /> },
+    ]
+  },
+  // { path: LOCATIONS.TEMPLATE, name: "Template", element: <Template /> },
+  { path: LOCATIONS.FORM, name: "Form Register", element: <FormPage /> },
+  { path: LOCATIONS.LOGIN, name: "Login", element: <LoginPage /> },
   { path: "*", element: <NotFoundPage /> },
 ];
-
-export default routers;
+export const unAuthRouter = [
+  { path: LOCATIONS.LOGIN, name: "Login Page", element: <LoginPage /> },
+];

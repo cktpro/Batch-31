@@ -1,51 +1,48 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
-  LaptopOutlined,
-  NotificationOutlined,
+  DesktopOutlined,
+  FileOutlined,
+  PieChartOutlined,
+  TeamOutlined,
   UserOutlined,
-} from "@ant-design/icons";
-import { theme, Layout, Menu } from "antd";
-const { Sider } = Layout;
-function SideBar(props) {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-  const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-    (icon, index) => {
-      const key = String(index + 1);
-      return {
-        key: `sub${key}`,
-        icon: React.createElement(icon),
-        label: `subnav ${key}`,
-        children: new Array(4).fill(null).map((_, j) => {
-          const subKey = index * 4 + j + 1;
-          return {
-            key: subKey,
-            label: `option${subKey}`,
-          };
-        }),
-      };
-    }
-  );
-  return (
-    <Sider
-      width={200}
-      style={{
-        background: colorBgContainer,
-      }}
-    >
-      <Menu
-        mode="inline"
-        defaultSelectedKeys={[""]}
-        defaultOpenKeys={[""]}
-        style={{
-          height: "100%",
-          borderRight: 0,
-        }}
-        items={items2}
-      />
-    </Sider>
-  );
-}
+  ProfileOutlined
+} from '@ant-design/icons';
+import {  Layout, Menu, } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-export default SideBar;
+import { LOCATIONS } from 'constants/index';
+const {Sider } = Layout;
+function getItem(label, key, icon, children) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}
+const items = [
+  getItem('Form', LOCATIONS.FORM, <PieChartOutlined />),
+  getItem('Products', LOCATIONS.PRODUCTS_PAGE, <ProfileOutlined />),
+  getItem('Playlist', LOCATIONS.PLAY_LIST, <DesktopOutlined />),
+  getItem('User', 'sub1', <UserOutlined />, [
+    getItem('Login', 'login'),
+    getItem('Register', 'register'),
+  ]),
+  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+  getItem('Todo App', LOCATIONS.TODO, <FileOutlined />),
+];
+const Siders = () => {
+  const navigate=useNavigate()
+  const onClick = (e) => {
+    console.log("click ", e);
+    navigate(e.key)
+  };
+  const [collapsed, setCollapsed] = useState(false);
+  return (
+    <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+        <div className="demo-logo-vertical" />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={onClick} items={items} />
+      </Sider>
+  );
+};
+export default Siders;

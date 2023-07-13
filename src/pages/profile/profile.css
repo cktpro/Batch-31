@@ -82,7 +82,7 @@ ion-icon:hover {
   transition: 0.5s;
 }
 
-button {
+.icon button,.button button {
   width: 130px;
   height: 40px;
   border-radius: 10px;

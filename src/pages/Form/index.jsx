@@ -65,6 +65,7 @@ function Form(props) {
         });
         if (found) {
           setCurrentStep((step) => step + 1);
+          console.log("ldld",found)
         } else {
           document.getElementById("invalid-feedback").innerHTML="Đăng nhập thất bại";
         }
@@ -217,7 +218,7 @@ function Form(props) {
   };
   // return begin
   return (
-    <div className="box">
+    <div className="boxForm">
       <div className="child">
         <div className=" form-signin w-100">
           {getTitle}

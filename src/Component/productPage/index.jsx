@@ -2,52 +2,55 @@ import { Space, Table, Tag } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
+import { formatter } from 'helper';
 const columns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text,record) => <Link to={'/antd'}>{text}{record.name}</Link>,
+    render: (text,record) => <Link to={'/antd'}>{record.name}</Link>,
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
+    width: '5%',
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    render: (text, r) => <span>{formatter.format(text)}</span>,
   },
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    title: 'Discount',
+    dataIndex: 'discount',
+    key: 'discount',
+    render: (text) => <span>{text || 0} %</span>,
   },
   {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
+    title: 'Giá bán',
+    dataIndex: 'discountedPrice',
+    key: 'discountedPrice',
+    render: (text, r) => <span>{formatter.format(text)}</span>,
+  },
+  {
+    title: 'Tồn kho',
+    dataIndex: 'stock',
+    key: 'stock',
+  },
+  {
+    title: 'Danh mục',
+    dataIndex: 'stock',
+    key: 'stock',
+    render: (text, r) => <span>{r.category.name}</span>,
+  },
+  {
+    title: 'Nhà cung cấp',
+    dataIndex: 'supplier',
+    key: 'supplier',
+    render: (text, r) => <span>{r.supplier.name}</span>,
   },
 ];
 const data = [
@@ -76,22 +79,21 @@ const data = [
 const ProductPage = () => {
   const[products,setProducts]=useState([])
   const getProductsData = async ()=>{
-    const url="https://batch-293-0-nodejs.onrender.com/user/products"
-    axios
-    .get(url)
-    .then((result) => {
-        console.log(result)
-      setProducts(result.data.payload)
-
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+    try {
+      const url="https://batch-293-0-nodejs.onrender.com/user/products"
+    const res=axios.get(url)
+    setProducts((await res).data.payload)
+    } catch (error) {
+      console.error('««««« err »»»»»', error);
+    }
+    
   }
   useEffect(()=>{
     getProductsData()
-    setProducts(getProductsData())
+    
   },[])
-  return <Table columns={columns} dataSource={data} />;
+  console.log(products)
+  return <Table rowKey="_id" columns={columns} dataSource={products} />;
+  
 };
 export default ProductPage;
