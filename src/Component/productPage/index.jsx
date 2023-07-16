@@ -4,12 +4,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import { formatter } from 'helper';
+import { LOCATIONS } from "constants/index";
 const columns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text,record) => <Link to={'/antd'}>{record.name}</Link>,
+    render: (text,record) => <Link to={LOCATIONS.PRODUCTS_DETAIL_PAGE}>{record.name}</Link>,
   },
   {
     title: 'Description',

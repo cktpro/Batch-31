@@ -25,8 +25,9 @@ const items = [
   getItem('Products', LOCATIONS.PRODUCTS_PAGE, <ProfileOutlined />),
   getItem('Playlist', LOCATIONS.PLAY_LIST, <DesktopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Login', 'login'),
+    getItem('Login', LOCATIONS.LOGIN),
     getItem('Register', 'register'),
+    getItem('Logout', 'logout'),
   ]),
   getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
   getItem('Todo App', LOCATIONS.TODO, <FileOutlined />),

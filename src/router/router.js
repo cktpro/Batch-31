@@ -15,6 +15,7 @@ import AntdHomePage from 'pages/antd/homePage';
 import ProductsPage from 'pages/productsPage';
 import ProductsDetail from 'pages/productsPage/detail';
 import LoginPage from 'pages/loginPage';
+import Logout from 'Component/Logout';
 
 export const routers = [
   {
@@ -47,6 +48,7 @@ export const routers = [
   // { path: LOCATIONS.TEMPLATE, name: "Template", element: <Template /> },
   { path: LOCATIONS.FORM, name: "Form Register", element: <FormPage /> },
   { path: LOCATIONS.LOGIN, name: "Login", element: <LoginPage /> },
+  { path: LOCATIONS.LOGOUT, name: "Login", element: <Logout /> },
   { path: "*", element: <NotFoundPage /> },
 ];
 export const unAuthRouter = [

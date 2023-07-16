@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { Space, Table } from 'antd';
+import {  Table } from 'antd';
 
 import { LOCATIONS } from 'constants/index';
 import { formatter } from 'helper';
-import BreadCrumb from 'Component/breadCrumb';
 import { axiosAdmin } from 'helper/axiosClient';
 
 const columns = [
@@ -13,7 +11,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    render: (text, record) => <Link to={`/${LOCATIONS.PRODUCTS_PAGE}/${record._id}`}>{text}</Link>,
+    render: (text, record) => <Link to={`${LOCATIONS.PRODUCTS_PAGE}/${record._id}`}>{text}</Link>,
   },
   {
     title: 'Description',
@@ -56,11 +54,6 @@ const columns = [
     key: 'supplier',
     render: (text, r) => <span>{r.supplier.name}</span>,
   },
-  {
-    title: 'Tồn kho ',
-    dataIndex: 'stock',
-    key: 'stock',
-  },
 ];
 // 
 const ProductsPage = () => {
@@ -85,7 +78,6 @@ const ProductsPage = () => {
 
   return (
     <>
-    <BreadCrumb/>
     <Table rowKey="_id" columns={columns} dataSource={products} />
     </>
   )

@@ -6,14 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { LOCATIONS } from "constants/index";
 import "./loginPage.css";
 import { axiosAdmin } from 'helper/axiosClient';
-function LoginPage(props) {
+import NotFoundPage from "pages/404";
+function  LoginPage(props) {
 const navigate=useNavigate()
 const token=window.localStorage.getItem("TOKEN")
-  const checkLogin = async (data) => {
-    // Promise
+  const checkLogin = async (data) => {  // Promise
     try {
       const url = 'https://batch-293-0-nodejs.onrender.com/admin/employees/login';
       const res = await axiosAdmin.post(url,data);
+      console.log(res)
       
       const{token,refreshToken}=res.data
 
@@ -22,7 +23,7 @@ const token=window.localStorage.getItem("TOKEN")
       axiosAdmin.defaults.headers.Authorization = `Bearer ${token}`;
 
       if (token) {
-        navigate(`/${LOCATIONS.PRODUCTS_PAGE}`);
+        navigate(LOCATIONS.PRODUCTS_PAGE);
       }
     } catch (error) {
       document.getElementById('invalid-feedback').innerHTML='Login thất bại'
@@ -83,11 +84,12 @@ const token=window.localStorage.getItem("TOKEN")
   }, [validationLogin.errors?.email, validationLogin.touched?.email]);
   useEffect(() => {
     if (token) {
-      navigate(`/${LOCATIONS.PRODUCTS_PAGE}`);
+      navigate(LOCATIONS.PRODUCTS_PAGE);
+      
     }
   }, []);
   // return begin
-  return (
+  return !token?(
     <div className="boxForm">
       <div className="child">
         <div className=" form-signin w-100">
@@ -104,7 +106,7 @@ const token=window.localStorage.getItem("TOKEN")
                   <input
                     type="text"
                     className={`form-control ${isErrorEmail && "is-invalid"}`}
-                    id="floatingEmail"
+                    id="email"
                     placeholder="Email"
                     name="email"
                     value={validationLogin.values.email}
@@ -112,7 +114,7 @@ const token=window.localStorage.getItem("TOKEN")
                     onBlur={validationLogin.handleBlur}
                   />
 
-                  <label htmlFor="floatingEmail">Email</label>
+                  <label htmlFor="email">Email</label>
                 </div>
                 {isErrorEmail && (
                   <div  className="fs-6 invalid-feedback mt-3">
@@ -136,7 +138,7 @@ const token=window.localStorage.getItem("TOKEN")
                   <input
                     type="password"
                     className={`form-control ${isErrorLogin && "is-invalid"}`}
-                    id="floatingEmail"
+                    id="password"
                     placeholder="password"
                     name="password"
                     value={validationLogin.values.password}
@@ -144,7 +146,7 @@ const token=window.localStorage.getItem("TOKEN")
                     onBlur={validationLogin.handleBlur}
                   />
 
-                  <label htmlFor="floatingEmail">Password</label>
+                  <label htmlFor="password">Password</label>
                 </div>
                 {isErrorLogin && (
                   <div  className="fs-6 invalid-feedback mt-3">
@@ -177,7 +179,7 @@ const token=window.localStorage.getItem("TOKEN")
         </div>
       </div>
     </div>
-  );
+  ):<NotFoundPage/>;
 }
 
 export default memo(LoginPage);

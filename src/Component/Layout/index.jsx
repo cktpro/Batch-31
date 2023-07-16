@@ -53,7 +53,7 @@ const Layouts = () => {
             style={{
               padding: 24,
               margin: 0,
-              minHeight: 500,
+              minHeight: 700,
               background: colorBgContainer,
             }}
           >
