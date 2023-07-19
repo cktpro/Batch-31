@@ -1,16 +1,79 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
 import "./form.css";
-
+import axios from "axios";
 const REGISTER_STEP = {
   EMAIL_STEP: 1,
   INFO_STEP: 2,
-  SUCCESS_STEP: 3,
+  LOGIN_STEP: 3,
+  SUCCESS_STEP: 4,
 };
-
+const info = {
+  email: "",
+  name: "",
+  password: "",
+};
 function Form(props) {
+  const registerEmail = (data) => {
+    const url = "https://64a5087500c3559aa9bef155.mockapi.io/User";
+    // Promise
+    axios
+      .post(url, data)
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const checkEmail = (email) => {
+    const url = "https://64a5087500c3559aa9bef155.mockapi.io/User";
+    // Promise
+    axios
+      .get(url)
+      .then((result) => {
+        const user = result.data;
+
+        const found = user.find((obj) => {
+          return obj.email === email;
+        });
+        if (found) {
+          info.email = found.email;
+          info.name = found.name;
+          info.password = found.password;
+          setCurrentStep((step) => step + 2);
+        } else {
+          setCurrentStep((step) => step + 1);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  const checkLogin = (data) => {
+    const url = "https://64a5087500c3559aa9bef155.mockapi.io/User";
+    // Promise
+    axios
+      .get(url)
+      .then((result) => {
+        const user = result.data;
+
+        const found = user.find((obj) => {
+          return obj.password === data.password;
+        });
+        if (found) {
+          setCurrentStep((step) => step + 1);
+          console.log("ldld",found)
+        } else {
+          document.getElementById("invalid-feedback").innerHTML="Đăng nhập thất bại";
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   const [currentStep, setCurrentStep] = useState(REGISTER_STEP.EMAIL_STEP);
 
   const validationEmail = useFormik({
@@ -21,16 +84,39 @@ function Form(props) {
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email format").required("Required!"),
     }),
-
     onSubmit: (values) => {
+      const { email } = values;
       // step 1: call Api and verify email
       // step 2: nếu thành công thì  chuyển sang step tiếp theo
       // step 2: nếu thất bại => hiển thị lỗi
       // setCurrentStep(REGISTER_STEP.INFO_STEP);
-      setCurrentStep((step) => step + 1);
+      checkEmail(email);
     },
   });
+  const validationLogin = useFormik({
+    initialValues: {
+      password: "",
+    },
 
+    validationSchema: Yup.object({
+      password: Yup.string()
+        .min(8, "Minimum 8 characters")
+        .required("Password is Required!"),
+    }),
+
+    onSubmit: (values) => {
+      const { password } = values;
+      const data = {
+        email: validationEmail.values.email,
+        password: password,
+      };
+      checkLogin(data);
+      // step 1: call Api and verify email
+      // step 2: nếu thành công thì  chuyển sang step tiếp theo
+      // step 2: nếu thất bại => hiển thị lỗi
+      // setCurrentStep(REGISTER_STEP.INFO_STEP);
+    },
+  });
   const validationInfo = useFormik({
     initialValues: {
       name: "",
@@ -53,13 +139,11 @@ function Form(props) {
 
       const data = {
         email: validationEmail.values.email,
-        name,
-        password,
+        name: name,
+        password: password,
       };
-
+      registerEmail(data);
       // onSubmitAsync({ email, password })
-
-      console.log("««««« Call API with value »»»»»", data);
 
       setCurrentStep(REGISTER_STEP.SUCCESS_STEP);
     },
@@ -72,7 +156,7 @@ function Form(props) {
 
       case REGISTER_STEP.INFO_STEP:
         return "Agree and continue";
-      case REGISTER_STEP.SUCCESS_STEP:
+      case REGISTER_STEP.LOGIN_STEP:
         return "Login";
 
       default:
@@ -91,17 +175,22 @@ function Form(props) {
       if (currentStep === REGISTER_STEP.INFO_STEP) {
         validationInfo.handleSubmit();
       }
+      if (currentStep === REGISTER_STEP.LOGIN_STEP) {
+        validationLogin.handleSubmit();
+      }
     },
-    [currentStep, validationEmail, validationInfo]
+    [currentStep, validationEmail, validationInfo, validationLogin]
   );
 
   const getTitle = useMemo(() => {
     switch (currentStep) {
       case REGISTER_STEP.EMAIL_STEP:
-        return <h1 className="h3 mb-3 fw-normal">Hi! </h1>;
+        return <h1 className="h3 text-white mb-3 fw-normal">Hi! </h1>;
 
       case REGISTER_STEP.INFO_STEP:
-        return <h1 className="h3 mb-3 fw-normal">Sign up</h1>;
+        return <h1 className="h3 text-white mb-3 fw-normal">Sign up</h1>;
+      case REGISTER_STEP.LOGIN_STEP:
+        return <h1 className="h3 text-white mb-3 fw-normal">Login</h1>;
 
       default:
         return;
@@ -114,6 +203,12 @@ function Form(props) {
     }
     return false;
   }, [validationEmail.errors?.email, validationEmail.touched?.email]);
+  const isErrorLogin = useMemo(() => {
+    if (validationLogin.errors?.password && validationLogin.touched?.password) {
+      return true;
+    }
+    return false;
+  }, [validationLogin.errors?.password, validationLogin.touched?.password]);
 
   const isErrorInfo = (fieldName) => {
     if (validationInfo.errors[fieldName] && validationInfo.touched[fieldName]) {
@@ -121,16 +216,16 @@ function Form(props) {
     }
     return false;
   };
-
+  // return begin
   return (
-    <div className="box">
+    <div className="boxForm">
       <div className="child">
         <div className=" form-signin w-100">
           {getTitle}
 
           {currentStep === REGISTER_STEP.EMAIL_STEP && (
             <>
-              <div className="input-group has-validation mb-3">
+              <div className="input-group d-block has-validation mb-3">
                 <div
                   className={`form-floating ${isErrorEmail && "is-invalid"}`}
                 >
@@ -148,7 +243,7 @@ function Form(props) {
                   <label htmlFor="floatingEmail">Email</label>
                 </div>
                 {isErrorEmail && (
-                  <div className="invalid-feedback mt-3">
+                  <div className="invalid-feedback fs-6 mt-3">
                     {validationEmail.errors?.email}
                   </div>
                 )}
@@ -158,11 +253,16 @@ function Form(props) {
 
           {currentStep === REGISTER_STEP.INFO_STEP && (
             <>
-            
-            <div className="term text-start my-3">
-                Look like you don't have an account.<br/>Let create new account for<br/><span className="fw-bolder">{validationEmail.values.email}</span>
+              <div className="term text-start my-3">
+                Look like you don't have an account.
+                <br />
+                Let create new account for
+                <br />
+                <span className="fw-bolder">
+                  {validationEmail.values.email}
+                </span>
               </div>
-              <div className="input-group has-validation mb-3">
+              <div className="input-group d-block has-validation mb-3">
                 <div
                   className={`form-floating ${
                     isErrorInfo("name") && "is-invalid"
@@ -184,13 +284,13 @@ function Form(props) {
                   <label htmlFor="floatingName">Name</label>
                 </div>
                 {isErrorInfo("name") && (
-                  <div className="invalid-feedback mt-3">
+                  <div className="invalid-feedback fs-6 mt-3">
                     {validationInfo.errors?.name}
                   </div>
                 )}
               </div>
 
-              <div className="input-group has-validation mb-3">
+              <div className="input-group d-block has-validation mb-3">
                 <div
                   className={`form-floating ${
                     isErrorInfo("password") && "is-invalid"
@@ -212,7 +312,7 @@ function Form(props) {
                   <label htmlFor="floatingPass">Password</label>
                 </div>
                 {isErrorInfo("password") && (
-                  <div className="invalid-feedback mt-3">
+                  <div className="invalid-feedback fs-6 mt-3">
                     {validationInfo.errors?.password}
                   </div>
                 )}
@@ -226,31 +326,74 @@ function Form(props) {
               </div>
             </>
           )}
+          {currentStep === REGISTER_STEP.LOGIN_STEP && (
+            <>
+            <div className="term text-start my-3">
+                {info.name}
+                <br />
+                  <span className="fw-bold">{info.email}</span>
+              </div>
+              <div className="input-group d-block has-validation mb-3">
+                <div
+                  className={`form-floating ${isErrorLogin && "is-invalid"}`}
+                >
+                  <input
+                    type="password"
+                    className={`form-control ${isErrorLogin && "is-invalid"}`}
+                    id="floatingEmail"
+                    placeholder="password"
+                    name="password"
+                    value={validationLogin.values.password}
+                    onChange={validationLogin.handleChange}
+                    onBlur={validationLogin.handleBlur}
+                  />
 
+                  <label htmlFor="floatingEmail">Password</label>
+                </div>
+                {isErrorLogin && (
+                  <div  className="fs-6 invalid-feedback mt-3">
+                    {validationLogin.errors?.password}
+                  </div>
+                )}
+                {
+                  !validationLogin.errors.password &&(
+                    <div id="invalid-feedback" className="fs-6 text-danger mt-3"></div>
+                  )
+                }
+                
+              </div>
+            </>
+          )}
           {currentStep === REGISTER_STEP.SUCCESS_STEP && (
             <>
-              <div className="p-3 text-success-emphasis bg-success-subtle border border-primary-subtle rounded-3 my-3">
-                Registed success!!!
+              <div className="p-3 alert alert-success">
+                Success!!!
               </div>
             </>
           )}
 
-          {/* {currentStep !== REGISTER_STEP.SUCCESS_STEP && ( */}
-          <button
-            className="btn btn-green w-100 py-3"
-            type="submit"
-            onClick={onClickButton}
-          >
-            {/* {
+          {currentStep !== REGISTER_STEP.SUCCESS_STEP && (
+            <button
+              className="btn btn-green w-100 py-3"
+              type="submit"
+              onClick={onClickButton}
+            >
+              {/* {
           currentStep === REGISTER_STEP.EMAIL_STEP ? 'Continue' : '| Agree and continue'
         } */}
-            {buttonContent}
-          </button>
-          {/* )} */}
-
+              {buttonContent}
+            </button>
+          )}
+          {currentStep === REGISTER_STEP.LOGIN_STEP && (
+            <div className="term text-start my-3">
+              <a className="link" href="">
+                Forgot your password?
+              </a>
+            </div>
+          )}
           {currentStep === REGISTER_STEP.EMAIL_STEP && (
             <>
-              <div className="my-2">
+              <div className="my-2 text-white">
                 <h5>or</h5>
               </div>
               <button className="btn btn-white w-100 py-3 mb-3">
@@ -278,11 +421,16 @@ function Form(props) {
                 Continue with Apple
               </button>
               <div className="term text-start my-3">
-                <p className="mb-0">
-                  Don't have an account? <a className="link" href="#">Sign up</a>
+                <p className="text-white mb-0">
+                  Don't have an account?{" "}
+                  <a className="link" href="#">
+                    Sign up
+                  </a>
                 </p>
                 <p>
-                  <a  className="link" href="#">Forgot your password?</a>
+                  <a className="link" href="#">
+                    Forgot your password?
+                  </a>
                 </p>
               </div>
             </>
@@ -293,4 +441,4 @@ function Form(props) {
   );
 }
 
-export default Form;
+export default memo(Form);

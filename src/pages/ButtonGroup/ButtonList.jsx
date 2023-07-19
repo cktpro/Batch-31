@@ -6,7 +6,7 @@ import Minus from "Component/Icon/minus";
 function ButtonList(props) {
   const [count, setCount] = useState(10);
   return (
-    <div class="d-flex justify-content-center">
+    <div className="d-flex justify-content-center">
       <div className="my-3">
       <Button
         icon={<Plus />}
@@ -27,7 +27,7 @@ function ButtonList(props) {
         onClick={() => setCount(count - 1)}
       />
       <Button
-        icon={<i class="fa-solid fa-xmark fa-2xl"></i>}
+        icon={<i className="fa-solid fa-xmark fa-2xl"></i>}
         title="Nhân đôi"
         buttonClass="button_secondary"
         iconClass="icon_secondary"
@@ -36,7 +36,7 @@ function ButtonList(props) {
         onClick={() => setCount(count * 2)}
       />
       <Button
-        icon={<i class="fa-solid fa-divide fa-2xl"></i>}
+        icon={<i className="fa-solid fa-divide fa-2xl"></i>}
         title="Chia đôi"
         buttonClass="button_primary"
         iconClass="icon_primary"
