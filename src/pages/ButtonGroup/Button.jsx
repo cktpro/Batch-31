@@ -25,7 +25,7 @@ function Button(props) {
             {title}
           </span>
           <span className={`${styles.icon} ${styles[`${iconClass}`]}`}>
-            {icon} {count}
+            {icon}
           </span>
         </div>
       ) : (
@@ -35,7 +35,7 @@ function Button(props) {
           </span>
 
           <span className={`${styles.title} ${styles[`${titleClass}`]}`}>
-            {title} {count}
+            {title}
           </span>
         </div>
       )}

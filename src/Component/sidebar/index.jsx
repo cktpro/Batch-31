@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
-  DesktopOutlined,
-  FileOutlined,
+  PlaySquareOutlined,
+  AppstoreOutlined,
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
-  ProfileOutlined
-} from '@ant-design/icons';
-import {  Layout, Menu, } from 'antd';
-import { useNavigate } from 'react-router-dom';
+  ProfileOutlined,
+} from "@ant-design/icons";
+import { Layout, Menu } from "antd";
+import { useNavigate } from "react-router-dom";
 
-import { LOCATIONS } from 'constants/index';
-const {Sider } = Layout;
+import { LOCATIONS } from "constants/index";
+const { Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -21,29 +21,42 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Form', LOCATIONS.FORM, <PieChartOutlined />),
-  getItem('Products', LOCATIONS.PRODUCTS_PAGE, <ProfileOutlined />),
-  getItem('Playlist', LOCATIONS.PLAY_LIST, <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Login', LOCATIONS.LOGIN),
-    getItem('Register', 'register'),
-    getItem('Logout', 'logout'),
+  getItem("Form Register", LOCATIONS.FORM, <PieChartOutlined />),
+  getItem("Products", LOCATIONS.PRODUCTS_PAGE, <ProfileOutlined />),
+  getItem("Playlist", LOCATIONS.PLAY_LIST, <PlaySquareOutlined />),
+  getItem("User", "sub1", <UserOutlined />, [
+    getItem("Login", LOCATIONS.LOGIN),
+    getItem("My Profile", "my_profile"),
+    getItem("Logout", "logout"),
   ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Todo App', LOCATIONS.TODO, <FileOutlined />),
+  getItem("Other", "sub2", <TeamOutlined />, [
+    getItem("Image Slide", "slider"),
+    getItem("Tab", "tabs"),
+    getItem("Counter App", "counter"),
+  ]),
+  getItem("Todo App", LOCATIONS.TODO, <AppstoreOutlined />),
 ];
 const Siders = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const onClick = (e) => {
-    console.log("click ", e);
-    navigate(e.key)
+    navigate(e.key);
   };
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={onClick} items={items} />
-      </Sider>
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={(value) => setCollapsed(value)}
+    >
+      <div className="demo-logo-vertical" />
+      <Menu
+        theme="dark"
+        defaultSelectedKeys={["1"]}
+        mode="inline"
+        onClick={onClick}
+        items={items}
+      />
+    </Sider>
   );
 };
 export default Siders;

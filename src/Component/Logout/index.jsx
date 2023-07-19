@@ -10,6 +10,7 @@ function  Logout(props) {
     if (token) {
       window.localStorage.removeItem("TOKEN")
       window.localStorage.removeItem("REFRESH_TOKEN")
+      window.localStorage.removeItem("DATA")
       navigate(LOCATIONS.LOGIN);
     } else {
       navigate(LOCATIONS.LOGIN);

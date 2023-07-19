@@ -50,7 +50,8 @@ function ProductDetail(props) {
           </tr>
           <tr>
             <td className="left">Mô tả</td>
-            <td className="right">{product.description}</td>
+            <td className="right
+            ">{product.description}</td>
           </tr>
           <tr>
             <td className="left">Số lượng còn lại</td>

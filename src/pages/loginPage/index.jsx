@@ -2,6 +2,7 @@ import React, { memo, useCallback, useMemo,useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 
 import { LOCATIONS } from "constants/index";
 import "./loginPage.css";
@@ -14,12 +15,10 @@ const token=window.localStorage.getItem("TOKEN")
     try {
       const url = 'https://batch-293-0-nodejs.onrender.com/admin/employees/login';
       const res = await axiosAdmin.post(url,data);
-      console.log(res)
-      
       const{token,refreshToken}=res.data
-
       window.localStorage.setItem("TOKEN",token)
       window.localStorage.setItem("REFRESH_TOKEN",refreshToken)
+      window.localStorage.setItem("DATA",data.email)
       axiosAdmin.defaults.headers.Authorization = `Bearer ${token}`;
 
       if (token) {

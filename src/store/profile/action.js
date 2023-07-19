@@ -17,3 +17,7 @@ export const actionGetProfileFail = (payload) => ({
   type: actionTypes.GET_MY_PROFILE_FAILED,
   payload,
 });
+export const  actionSaveInfo = (payload) => ({
+  type: actionTypes.SAVING_INFO,
+  payload,
+});

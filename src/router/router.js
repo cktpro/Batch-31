@@ -16,6 +16,8 @@ import ProductsPage from 'pages/productsPage';
 import ProductsDetail from 'pages/productsPage/detail';
 import LoginPage from 'pages/loginPage';
 import Logout from 'Component/Logout';
+import ImageSlider from 'pages/imageSlide';
+import Tabs from 'pages/Tab';
 
 export const routers = [
   {
@@ -23,7 +25,7 @@ export const routers = [
     name: "Layout",
     element: <Layout />,
     children: [
-      { isRoot: true, name: "Parent Component", element: <TodoApp /> },
+      { isRoot: true, name: "Parent Component", element: <ProductsPage /> },
       { path: LOCATIONS.PLAY_LIST, name: "Play List", element: <PlayList /> },
       
       // { path: LOCATIONS.TAB, name: "Tab", element: <TabPage /> },
@@ -34,6 +36,9 @@ export const routers = [
       { path: LOCATIONS.TODO, name: "Todo", element: <TodoApp /> },
       { path: LOCATIONS.PRODUCTS_PAGE, name: "Products", element: <ProductsPage /> },
       { path: LOCATIONS.PRODUCTS_DETAIL_PAGE, name: "Products Detail", element: <ProductsDetail /> },
+      { path: LOCATIONS.SLIDE, name: "Slide Page", element: <ImageSlider /> },
+      { path: LOCATIONS.TAB, name: "Tabs Page", element: <Tabs /> },
+      
     ]
   },
   {

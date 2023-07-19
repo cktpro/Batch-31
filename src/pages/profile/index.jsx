@@ -6,7 +6,6 @@ import Loading from 'Component/loading';
 
 function MyProfile(props) {
   const profile = useSelector((state) => state.profileReducer.profile);
-  console.log(profile)
   const isLoading = useSelector((state) => state.profileReducer.isLoading);
 
   return (
