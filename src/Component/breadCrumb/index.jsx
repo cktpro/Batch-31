@@ -5,13 +5,14 @@ import { useLocation } from 'react-router-dom'
 
 function BreadCrumb(props) {
   const location = useLocation();
-  const title= location.pathname.split("/")
+  const title= location.pathname.split("/").toString()
+  const upcase =title.charAt(1).toUpperCase()+title.slice(2)
   const items=[
     {
       title: "Home",
     },
     {
-      title: title,
+      title: upcase
     }
   ]
     return (
